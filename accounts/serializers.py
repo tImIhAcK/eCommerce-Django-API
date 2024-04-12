@@ -2,18 +2,12 @@ from accounts.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 # from django_restql.mixins import DynamicFieldsMixin
 from rest_framework import serializers
-from .models import User, Profile 
+from .models import User, Profile
 from djoser.serializers import UserCreateSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from djoser.serializers import TokenCreateSerializer
 
-class CustomTokenCreateSerializer(TokenCreateSerializer):
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['email'] = serializers.EmailField(source='user.email')
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -22,10 +16,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         token['email'] = user.email
         token['id'] = user.id
-        
+
         return token
 
-    
+
 class UserSerializer(UserCreateSerializer):
 
     class Meta(UserCreateSerializer.Meta):
@@ -34,21 +28,22 @@ class UserSerializer(UserCreateSerializer):
 
     def create(self, validated_data):
         user = User(**validated_data)
-        
+
         email_sent = user.send_activation_email()
 
         if email_sent:
             return Response(status=status.HTTP_201_CREATED)
-        
+
         return Response(
-        {"message": "Failed to send activation email."},
-        status=status.HTTP_400_BAD_REQUEST  
-      ) 
-    
+            {"message": "Failed to send activation email."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class ProfileSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Profile
         fields = [
@@ -57,13 +52,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             'gender'
             'phone',
             'city',
-            'state', 
+            'state',
             'country',
             'image'
 
         ]
+
     def create(self, validated_data, *args, **kwargs):
         validated_data['user'] = self.context['request'].user
         return super().create(validated_data, *args, **kwargs)
-    
-    

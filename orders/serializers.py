@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Order, OrderItem
+from .tasks import order_created
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,4 +23,7 @@ class OrderSerializer(serializers.ModelSerializer):
         order = Order.objects.create(**validated_data)
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)
+            
+        # launch asynchronous task
+        order_created.delay(order.id)
         return order
