@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 CORS_ALLOW_HEADERS = ['*']
 CORS_ORIGIN_WHITELIST = [
     "http://locahost:5173",
+    "http://192.168.194.154:5173"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 
     # 
     'store',
+    "orders"
 ]
 
 MIDDLEWARE = [
@@ -224,8 +226,6 @@ DJOSER = {
     "HIDE_USERS": True,
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'api/v1/account/activate/{uid}/{token}',
-    # 'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
-    # 'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://edujobsng.up.railway.up'],
     'SERIALIZERS': {
         "user_create": "accounts.serializers.UserSerializer",
         'token': 'accounts.serializers.CustomTokenCreateSerializer',
