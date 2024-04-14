@@ -39,8 +39,6 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-SITE_URL = 'http://localhost:8000'
-
 SITE_ID = 1
 
 
@@ -238,9 +236,12 @@ DJOSER = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SITE_NAME = "E-COMMERCE"
+STRIPE_SECRET_KEY = 'sk_test_51P4mYIK5zhZo1hwgfzbR9T9OWdQm4PjKA4eOS7l47xRApp0XkKbiImrHnS7xtDnpn0iVu9eCXC0Y0dRA5dtNNjps00MbQ7fOLT'
 
+SITE_NAME = "E-COMMERCE"
+SITE_URL = 'http://localhost:5137'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = 'adeniranjohn2016@gmail.com'
