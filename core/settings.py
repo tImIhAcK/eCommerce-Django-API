@@ -23,12 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-2dg(a0*+ip8%z1gudt1)qd=1f7$5(k9o+mh8ubj%yp!t$u1m(8"
+# SECRET_KEY = "django-insecure-2dg(a0*+ip8%z1gudt1)qd=1f7$5(k9o+mh8ubj%yp!t$u1m(8"
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = SECRET_KEY = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+USE_L10N = False
+USE_TZ = False
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', ]
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+SITE_ID = 1
 
 CORS_ALLOW_HEADERS = ['*']
 CORS_ORIGIN_WHITELIST = [
@@ -62,6 +69,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     "phonenumber_field",
     'drf_yasg',
+    "djoser",
 
     # 
     'store',
@@ -224,7 +232,7 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL":True,
     "HIDE_USERS": True,
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'api/v1/account/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SERIALIZERS': {
         "user_create": "accounts.serializers.UserSerializer",
         'token': 'accounts.serializers.CustomTokenCreateSerializer',
@@ -236,18 +244,18 @@ DJOSER = {
     }
 }
 
-STRIPE_SECRET_KEY = 'sk_test_51P4mYIK5zhZo1hwgfzbR9T9OWdQm4PjKA4eOS7l47xRApp0XkKbiImrHnS7xtDnpn0iVu9eCXC0Y0dRA5dtNNjps00MbQ7fOLT'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 SITE_NAME = "E-COMMERCE"
-SITE_URL = 'http://localhost:5137'
+SITE_URL = 'http://localhost:5173/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'adeniranjohn2016@gmail.com'
-# EMAIL_HOST_PASSWORD = 'rholmlgnqmizthlg'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 AUTHENTICATION_BACKENDS = (
     # 'social_core.backends.google.GoogleOAuth2',
