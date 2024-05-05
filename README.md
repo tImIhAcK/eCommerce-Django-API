@@ -34,6 +34,19 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+> Execute the following command in the shell to start the RabbitMQ server with Docker:
+
+```
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672
+rabbitmq:management
+```
+
+> Open another shell and start the Celery worker from project directory with the following command:
+
+```
+celery -A myshop worker -l info
+```
+
 > Start server
 
 ```
