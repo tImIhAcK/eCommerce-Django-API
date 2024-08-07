@@ -247,7 +247,8 @@ DJOSER = {
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 SITE_NAME = "E-COMMERCE"
-SITE_URL = 'http://localhost:5173/'
+SITE_URL = 'http://localhost:5173'
+API_URL = 'http://localhost:8000'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

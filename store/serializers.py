@@ -12,7 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
 
     def get_image(self, product):
-        return f"{settings.SITE_URL}{product.image.url}"
+        return f"{settings.API_URL}{product.image.url}"
 
     class Meta:
         model = Product
